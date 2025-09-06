@@ -12,6 +12,6 @@ class Account < ApplicationRecord
   validates :account_type, inclusion: { in: ACCOUNT_TYPES }
 
   def balance_as_of(date)
-    transactions.where('transaction_date <= ?', date).sum(:amount)
+    transactions.where("transaction_date <= ?", date).sum(:amount)
   end
 end

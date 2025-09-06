@@ -1,13 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  account: one
-  filename: MyString
-  upload_date: 2025-09-06 12:20:57
-  file_content: MyText
+sample_statement:
+  account: sample_account
+  filename: bank_statement_jan_2025.pdf
+  upload_date: 2025-01-15 10:00:00
+  file_content: Sample bank statement content
 
-two:
-  account: two
-  filename: MyString
-  upload_date: 2025-09-06 12:20:57
-  file_content: MyText
+savings_statement:
+  account: savings_account
+  filename: savings_statement_jan_2025.pdf
+  upload_date: 2025-01-20 14:30:00
+  file_content: Sample savings statement content

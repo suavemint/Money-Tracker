@@ -38,14 +38,14 @@ if Rails.env.development?
     account.institution = "Sample Bank"
     account.current_balance = 2500.00
   end
-  
+
   puts "Created sample account: #{sample_account.name}"
-  
+
   # Create sample transactions
   groceries_category = Category.find_by(name: "Groceries")
   salary_category = Category.find_by(name: "Salary")
   utilities_category = Category.find_by(name: "Utilities")
-  
+
   sample_transactions = [
     {
       account: sample_account,
@@ -72,7 +72,7 @@ if Rails.env.development?
       transaction_type: "debit"
     }
   ]
-  
+
   sample_transactions.each do |transaction_attrs|
     Transaction.find_or_create_by!(
       account: transaction_attrs[:account],
@@ -84,6 +84,6 @@ if Rails.env.development?
       transaction.transaction_type = transaction_attrs[:transaction_type]
     end
   end
-  
+
   puts "Created #{sample_transactions.length} sample transactions"
 end

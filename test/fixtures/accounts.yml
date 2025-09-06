@@ -1,15 +1,15 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  account_type: MyString
-  account_number: MyString
-  institution: MyString
-  current_balance: 9.99
+sample_account:
+  name: Test Checking Account
+  account_type: checking
+  account_number: "****1234"
+  institution: Test Bank
+  current_balance: 1500.00
 
-two:
-  name: MyString
-  account_type: MyString
-  account_number: MyString
-  institution: MyString
-  current_balance: 9.99
+savings_account:
+  name: Test Savings Account
+  account_type: savings
+  account_number: "****5678"
+  institution: Test Bank
+  current_balance: 5000.00

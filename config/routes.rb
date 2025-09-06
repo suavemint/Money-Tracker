@@ -3,25 +3,25 @@ Rails.application.routes.draw do
 
   # Root route - dashboard
   root "dashboard#index"
-  
+
   # Dashboard
   get "dashboard", to: "dashboard#index"
-  
+
   # Resources with proper RESTful routes
   resources :accounts do
-    resources :transactions, except: [:show]
-    resources :statements, only: [:index, :show, :new, :create, :destroy]
+    resources :transactions, except: [ :show ]
+    resources :statements, only: [ :index, :show, :new, :create, :destroy ]
   end
-  
-  resources :transactions, only: [:index, :show, :edit, :update, :destroy] do
+
+  resources :transactions, only: [ :index, :show, :edit, :update, :destroy ] do
     member do
       patch :categorize
     end
   end
-  
+
   resources :categories
-  
-  resources :statements, only: [:index, :show, :destroy] do
+
+  resources :statements, only: [ :index, :show, :destroy ] do
     member do
       post :parse_pdf
     end

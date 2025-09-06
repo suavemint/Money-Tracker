@@ -1,19 +1,19 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  account: one
-  category: one
-  statement: one
-  amount: 9.99
-  description: MyString
-  transaction_date: 2025-09-06
-  transaction_type: MyString
+sample_transaction:
+  account: sample_account
+  category: groceries
+  statement: sample_statement
+  amount: -75.50
+  description: Whole Foods Market
+  transaction_date: 2025-01-15
+  transaction_type: debit
 
-two:
-  account: two
-  category: two
-  statement: two
-  amount: 9.99
-  description: MyString
-  transaction_date: 2025-09-06
-  transaction_type: MyString
+income_transaction:
+  account: sample_account
+  category: salary
+  statement:
+  amount: 3000.00
+  description: Monthly Salary
+  transaction_date: 2025-01-01
+  transaction_type: credit
