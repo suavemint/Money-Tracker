@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  account: one
+  filename: MyString
+  upload_date: 2025-09-06 12:20:57
+  file_content: MyText
+
+two:
+  account: two
+  filename: MyString
+  upload_date: 2025-09-06 12:20:57
+  file_content: MyText
