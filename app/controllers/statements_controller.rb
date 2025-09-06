@@ -13,6 +13,7 @@ class StatementsController < ApplicationController
 
   def create
     @statement = Statement.new(statement_params)
+    @statement.account = Account.find(params[:account_id]) if params[:account_id]
     if @statement.save
       redirect_to @statement
     else
@@ -29,6 +30,6 @@ class StatementsController < ApplicationController
   private
 
   def statement_params
-    params.require(:statement).permit(:account_id, :filename, :upload_date, :file)
+    params.require(:statement).permit(:filename, :upload_date, :file)
   end
 end

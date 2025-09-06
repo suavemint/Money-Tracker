@@ -17,6 +17,8 @@ class TransactionsController < ApplicationController
 
   def create
     @transaction = Transaction.new(transaction_params)
+    @transaction.account = Account.find(params[:account_id]) if params[:account_id]
+    @transaction.category = Category.find(params[:transaction][:category_id]) if params[:transaction][:category_id].present?
     if @transaction.save
       redirect_to @transaction
     else
@@ -26,7 +28,9 @@ class TransactionsController < ApplicationController
 
   def update
     @transaction = Transaction.find(params[:id])
-    if @transaction.update(transaction_params)
+    @transaction.assign_attributes(transaction_params)
+    @transaction.category = Category.find(params[:transaction][:category_id]) if params[:transaction][:category_id].present?
+    if @transaction.save
       redirect_to @transaction
     else
       render :edit
@@ -42,6 +46,6 @@ class TransactionsController < ApplicationController
   private
 
   def transaction_params
-    params.require(:transaction).permit(:account_id, :category_id, :amount, :description, :transaction_date, :transaction_type)
+    params.require(:transaction).permit(:amount, :description, :transaction_date, :transaction_type)
   end
 end
