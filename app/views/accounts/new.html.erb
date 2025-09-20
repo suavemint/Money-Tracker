@@ -1,2 +1,71 @@
-<h1>Accounts#new</h1>
-<p>Find me in app/views/accounts/new.html.erb</p>
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+  <h1 style="margin: 0; color: #1f2937; font-size: 2rem;">Add New Account</h1>
+  <%= link_to "← Back to Accounts", accounts_path, style: "color: #6b7280; text-decoration: none;" %>
+</div>
+
+<div style="max-width: 600px;">
+  <div style="background-color: white; border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+    <%= form_with model: @account, local: true, style: "display: block;" do |form| %>
+      <% if @account.errors.any? %>
+        <div style="background-color: #fef2f2; border: 1px solid #fecaca; color: #dc2626; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem;">
+          <h4 style="margin: 0 0 0.5rem 0;">Please fix the following errors:</h4>
+          <ul style="margin: 0; padding-left: 1.5rem;">
+            <% @account.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div style="margin-bottom: 1.5rem;">
+        <%= form.label :name, style: "display: block; font-weight: 600; color: #374151; margin-bottom: 0.5rem;" %>
+        <%= form.text_field :name, placeholder: "e.g., Chase Checking", 
+            style: "width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 1rem;" %>
+      </div>
+
+      <div style="margin-bottom: 1.5rem;">
+        <%= form.label :institution, style: "display: block; font-weight: 600; color: #374151; margin-bottom: 0.5rem;" %>
+        <%= form.text_field :institution, placeholder: "e.g., Chase Bank", 
+            style: "width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 1rem;" %>
+      </div>
+
+      <div style="margin-bottom: 1.5rem;">
+        <%= form.label :account_type, style: "display: block; font-weight: 600; color: #374151; margin-bottom: 0.5rem;" %>
+        <%= form.select :account_type, 
+            options_for_select([
+              ['Checking Account', 'checking'],
+              ['Savings Account', 'savings'],
+              ['Credit Card', 'credit_card'],
+              ['Investment Account', 'investment'],
+              ['Loan Account', 'loan'],
+              ['Other', 'other']
+            ], @account.account_type),
+            { prompt: 'Select account type...' },
+            { style: "width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 1rem; background-color: white;" } %>
+      </div>
+
+      <div style="margin-bottom: 1.5rem;">
+        <%= form.label :account_number, "Account Number (optional)", style: "display: block; font-weight: 600; color: #374151; margin-bottom: 0.5rem;" %>
+        <%= form.text_field :account_number, placeholder: "Last 4 digits for security", 
+            style: "width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 1rem;" %>
+        <div style="color: #6b7280; font-size: 0.875rem; margin-top: 0.25rem;">
+          Only enter the last 4 digits for security purposes
+        </div>
+      </div>
+
+      <div style="margin-bottom: 2rem;">
+        <%= form.label :current_balance, style: "display: block; font-weight: 600; color: #374151; margin-bottom: 0.5rem;" %>
+        <%= form.number_field :current_balance, step: 0.01, placeholder: "0.00", 
+            style: "width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 1rem;" %>
+        <div style="color: #6b7280; font-size: 0.875rem; margin-top: 0.25rem;">
+          Enter the current balance of this account
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+        <%= link_to "Cancel", accounts_path, style: "padding: 0.75rem 1.5rem; border: 1px solid #d1d5db; border-radius: 0.375rem; text-decoration: none; color: #374151; background-color: white;" %>
+        <%= form.submit "Create Account", style: "background-color: #2563eb; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 0.375rem; font-weight: 500; cursor: pointer;" %>
+      </div>
+    <% end %>
+  </div>
+</div>
