@@ -1,6 +1,6 @@
 class Transaction < ApplicationRecord
   belongs_to :account
-  belongs_to :category
+  belongs_to :category, optional: true
   belongs_to :statement, optional: true
 
   validates :amount, presence: true, numericality: true
