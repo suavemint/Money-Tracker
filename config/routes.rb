@@ -13,7 +13,7 @@ Rails.application.routes.draw do
     resources :statements, only: [ :index, :show, :new, :create, :destroy ]
   end
 
-  resources :transactions, only: [ :index, :show, :edit, :update, :destroy ] do
+  resources :transactions, only: [ :index, :show, :new, :create, :edit, :update, :destroy ] do
     member do
       patch :categorize
     end
@@ -21,7 +21,7 @@ Rails.application.routes.draw do
 
   resources :categories
 
-  resources :statements, only: [ :index, :show, :destroy ] do
+  resources :statements, only: [ :index, :show, :new, :create, :destroy ] do
     member do
       post :parse_pdf
     end
