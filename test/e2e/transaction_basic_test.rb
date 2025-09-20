@@ -3,14 +3,14 @@ require_relative "test_helper"
 class TransactionBasicTest < E2ETestCase
   test "can view transactions index" do
     visit "/transactions"
-    
+
     expect_heading("Transactions")
     expect_text("Add New Transaction")
   end
-  
+
   test "can navigate to new transaction form" do
     visit "/transactions"
-    
+
     click_link "Add New Transaction"
     expect_heading("Add New Transaction")
     expect_text("Description")
@@ -18,20 +18,20 @@ class TransactionBasicTest < E2ETestCase
     expect_text("Transaction date")
     expect_text("Account")
   end
-  
+
   test "can create transaction from account page" do
     visit "/accounts/#{@test_account.id}"
-    
+
     expect_heading("Test Checking")
     expect_text("Add Transaction")
-    
+
     click_link "Add Transaction"
     expect_heading("Add New Transaction")
-    
+
     # Should show the account name since it's pre-selected
     expect_text("Test Checking")
   end
-  
+
   test "shows transactions with proper formatting" do
     # Create test transactions (without category to avoid validation)
     Transaction.create!(
@@ -41,17 +41,17 @@ class TransactionBasicTest < E2ETestCase
       transaction_type: "credit",
       account: @test_account
     )
-    
+
     Transaction.create!(
-      description: "Expense Test", 
+      description: "Expense Test",
       amount: -50.00,
       transaction_date: Date.current,
-      transaction_type: "debit", 
+      transaction_type: "debit",
       account: @test_account
     )
-    
+
     visit "/transactions"
-    
+
     expect_text("Income Test")
     expect_text("Expense Test")
     expect_text("+$1,000.00")
