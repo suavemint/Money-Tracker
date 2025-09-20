@@ -1,2 +1,43 @@
-<h1>Statements#index</h1>
-<p>Find me in app/views/statements/index.html.erb</p>
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+  <h1 style="margin: 0; color: #1f2937; font-size: 2rem;">Statements</h1>
+  <%= link_to "Upload New Statement", new_statement_path, style: "background-color: #2563eb; color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 0.375rem; font-weight: 500;" %>
+</div>
+
+<% if @statements.any? %>
+  <div style="background-color: white; border: 1px solid #e5e7eb; border-radius: 0.5rem; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+    <% @statements.each_with_index do |statement, index| %>
+      <div style="padding: 1.5rem; <%= 'border-bottom: 1px solid #f3f4f6;' unless index == @statements.count - 1 %>">
+        <div style="display: flex; justify-content: space-between; align-items: start;">
+          <div style="flex: 1;">
+            <h3 style="margin: 0 0 0.5rem 0; color: #1f2937; font-size: 1.25rem;">
+              <%= link_to statement.filename, statement_path(statement), style: "color: #2563eb; text-decoration: none;" %>
+            </h3>
+            <div style="color: #6b7280; margin-bottom: 0.5rem;">
+              <strong><%= statement.account.name %></strong> • Uploaded <%= statement.upload_date.strftime("%b %d, %Y") %>
+            </div>
+            <div style="color: #6b7280; font-size: 0.875rem;">
+              <%= pluralize(statement.transactions.count, 'transaction') %> extracted
+            </div>
+          </div>
+          
+          <div style="text-align: right; margin-left: 2rem;">
+            <div style="display: flex; gap: 0.5rem;">
+              <%= link_to "View", statement_path(statement), style: "color: #2563eb; text-decoration: none; padding: 0.25rem 0.75rem; border: 1px solid #2563eb; border-radius: 0.25rem; font-size: 0.875rem;" %>
+              <%= link_to "Parse PDF", parse_pdf_statement_path(statement), method: :post, 
+                    style: "color: #7c3aed; text-decoration: none; padding: 0.25rem 0.75rem; border: 1px solid #7c3aed; border-radius: 0.25rem; font-size: 0.875rem;" %>
+              <%= link_to "Delete", statement_path(statement), method: :delete, 
+                    confirm: "Are you sure you want to delete this statement?", 
+                    style: "color: #dc2626; text-decoration: none; padding: 0.25rem 0.75rem; border: 1px solid #dc2626; border-radius: 0.25rem; font-size: 0.875rem;" %>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div style="text-align: center; padding: 3rem; background-color: white; border: 1px solid #e5e7eb; border-radius: 0.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+    <h2 style="color: #6b7280; margin-bottom: 1rem;">No statements yet</h2>
+    <p style="color: #9ca3af; margin-bottom: 2rem;">Upload bank statements to automatically extract transaction data.</p>
+    <%= link_to "Upload Your First Statement", new_statement_path, style: "background-color: #2563eb; color: white; padding: 0.75rem 1.5rem; text-decoration: none; border-radius: 0.375rem; font-weight: 500;" %>
+  </div>
+<% end %>

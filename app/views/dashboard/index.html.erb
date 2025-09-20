@@ -1,2 +1,89 @@
-<h1>Dashboard#index</h1>
-<p>Find me in app/views/dashboard/index.html.erb</p>
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+  <h1 style="margin: 0; color: #1f2937; font-size: 2rem;">Dashboard</h1>
+  <div style="display: flex; gap: 1rem;">
+    <%= link_to "Add Account", new_account_path, style: "background-color: #2563eb; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 0.375rem; font-weight: 500;" %>
+    <%= link_to "Add Transaction", new_transaction_path, style: "background-color: #059669; color: white; padding: 0.5rem 1rem; text-decoration: none; border-radius: 0.375rem; font-weight: 500;" %>
+  </div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+  <div style="background-color: white; border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+    <h3 style="margin: 0 0 0.5rem 0; color: #1f2937;">Total Balance</h3>
+    <p style="margin: 0; font-size: 2rem; font-weight: bold; color: <%= @total_balance >= 0 ? '#059669' : '#dc2626' %>;">
+      $<%= number_with_precision(@total_balance, precision: 2, delimiter: ',') %>
+    </p>
+  </div>
+
+  <div style="background-color: white; border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+    <h3 style="margin: 0 0 0.5rem 0; color: #1f2937;">Total Accounts</h3>
+    <p style="margin: 0; font-size: 2rem; font-weight: bold; color: #2563eb;">
+      <%= @accounts.count %>
+    </p>
+  </div>
+
+  <div style="background-color: white; border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+    <h3 style="margin: 0 0 0.5rem 0; color: #1f2937;">Recent Transactions</h3>
+    <p style="margin: 0; font-size: 2rem; font-weight: bold; color: #2563eb;">
+      <%= @recent_transactions.count %>
+    </p>
+  </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+  <div style="background-color: white; border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+      <h2 style="margin: 0; color: #1f2937;">Accounts</h2>
+      <%= link_to "View All", accounts_path, style: "color: #2563eb; text-decoration: none; font-weight: 500;" %>
+    </div>
+    <% if @accounts.any? %>
+      <% @accounts.limit(5).each do |account| %>
+        <div style="border-bottom: 1px solid #f3f4f6; padding: 0.75rem 0;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <strong style="color: #1f2937;"><%= account.name %></strong>
+              <div style="color: #6b7280; font-size: 0.875rem;"><%= account.institution %> • <%= account.account_type.humanize %></div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-weight: 600; color: <%= account.current_balance >= 0 ? '#059669' : '#dc2626' %>;">
+                $<%= number_with_precision(account.current_balance, precision: 2, delimiter: ',') %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <p style="color: #6b7280; margin: 1rem 0;">No accounts yet. <%= link_to "Add your first account", new_account_path, style: "color: #2563eb; text-decoration: none;" %></p>
+    <% end %>
+  </div>
+
+  <div style="background-color: white; border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 1.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+      <h2 style="margin: 0; color: #1f2937;">Recent Transactions</h2>
+      <%= link_to "View All", transactions_path, style: "color: #2563eb; text-decoration: none; font-weight: 500;" %>
+    </div>
+    <% if @recent_transactions.any? %>
+      <% @recent_transactions.limit(5).each do |transaction| %>
+        <div style="border-bottom: 1px solid #f3f4f6; padding: 0.75rem 0;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <strong style="color: #1f2937;"><%= transaction.description %></strong>
+              <div style="color: #6b7280; font-size: 0.875rem;">
+                <%= transaction.account.name %> • <%= transaction.transaction_date.strftime("%b %d, %Y") %>
+                <% if transaction.category %>
+                  • <span style="background-color: <%= transaction.category.color %>; color: white; padding: 0.125rem 0.5rem; border-radius: 0.25rem; font-size: 0.75rem;"><%= transaction.category.name %></span>
+                <% end %>
+              </div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-weight: 600; color: <%= transaction.amount >= 0 ? '#059669' : '#dc2626' %>;">
+                <%= transaction.amount >= 0 ? '+' : '' %>$<%= number_with_precision(transaction.amount.abs, precision: 2, delimiter: ',') %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <p style="color: #6b7280; margin: 1rem 0;">No transactions yet. <%= link_to "Add your first transaction", new_transaction_path, style: "color: #2563eb; text-decoration: none;" %></p>
+    <% end %>
+  </div>
+</div>
