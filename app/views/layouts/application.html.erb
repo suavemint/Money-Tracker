@@ -23,6 +23,35 @@
   </head>
 
   <body>
-    <%= yield %>
+    <header style="background-color: #2563eb; color: white; padding: 1rem 0;">
+      <nav style="max-width: 1200px; margin: 0 auto; padding: 0 1rem; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <%= link_to "Money Tracker", root_path, style: "color: white; text-decoration: none; font-size: 1.5rem; font-weight: bold;" %>
+        </div>
+        <div style="display: flex; gap: 1rem;">
+          <%= link_to "Dashboard", dashboard_path, style: "color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 0.25rem; background-color: rgba(255,255,255,0.1);" %>
+          <%= link_to "Accounts", accounts_path, style: "color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 0.25rem; background-color: rgba(255,255,255,0.1);" %>
+          <%= link_to "Transactions", transactions_path, style: "color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 0.25rem; background-color: rgba(255,255,255,0.1);" %>
+          <%= link_to "Categories", categories_path, style: "color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 0.25rem; background-color: rgba(255,255,255,0.1);" %>
+          <%= link_to "Statements", statements_path, style: "color: white; text-decoration: none; padding: 0.5rem 1rem; border-radius: 0.25rem; background-color: rgba(255,255,255,0.1);" %>
+        </div>
+      </nav>
+    </header>
+
+    <main style="max-width: 1200px; margin: 0 auto; padding: 2rem 1rem;">
+      <% if notice %>
+        <div style="background-color: #dcfce7; border: 1px solid #bbf7d0; color: #15803d; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem;">
+          <%= notice %>
+        </div>
+      <% end %>
+
+      <% if alert %>
+        <div style="background-color: #fef2f2; border: 1px solid #fecaca; color: #dc2626; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem;">
+          <%= alert %>
+        </div>
+      <% end %>
+
+      <%= yield %>
+    </main>
   </body>
 </html>

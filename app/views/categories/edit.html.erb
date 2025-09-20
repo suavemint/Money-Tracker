@@ -1,2 +1,50 @@
-<h1>Categories#edit</h1>
-<p>Find me in app/views/categories/edit.html.erb</p>
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+  <h1 style="margin: 0; color: #1f2937; font-size: 2rem;">Edit Category</h1>
+  <div style="display: flex; gap: 1rem;">
+    <%= link_to "← Back to Categories", categories_path, style: "color: #6b7280; text-decoration: none;" %>
+    <%= link_to "View Category", category_path(@category), style: "color: #2563eb; text-decoration: none;" %>
+  </div>
+</div>
+
+<div style="max-width: 600px;">
+  <div style="background-color: white; border: 1px solid #e5e7eb; border-radius: 0.5rem; padding: 2rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+    <%= form_with model: @category, local: true, style: "display: block;" do |form| %>
+      <% if @category.errors.any? %>
+        <div style="background-color: #fef2f2; border: 1px solid #fecaca; color: #dc2626; padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem;">
+          <h4 style="margin: 0 0 0.5rem 0;">Please fix the following errors:</h4>
+          <ul style="margin: 0; padding-left: 1.5rem;">
+            <% @category.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div style="margin-bottom: 1.5rem;">
+        <%= form.label :name, style: "display: block; font-weight: 600; color: #374151; margin-bottom: 0.5rem;" %>
+        <%= form.text_field :name, placeholder: "e.g., Groceries", 
+            style: "width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 1rem;" %>
+      </div>
+
+      <div style="margin-bottom: 1.5rem;">
+        <%= form.label :color, style: "display: block; font-weight: 600; color: #374151; margin-bottom: 0.5rem;" %>
+        <%= form.color_field :color, 
+            style: "width: 100%; padding: 0.5rem; border: 1px solid #d1d5db; border-radius: 0.375rem; height: 3rem;" %>
+        <div style="color: #6b7280; font-size: 0.875rem; margin-top: 0.25rem;">
+          Choose a color to help identify this category
+        </div>
+      </div>
+
+      <div style="margin-bottom: 2rem;">
+        <%= form.label :description, "Description (optional)", style: "display: block; font-weight: 600; color: #374151; margin-bottom: 0.5rem;" %>
+        <%= form.text_area :description, rows: 3, placeholder: "Brief description of this category...", 
+            style: "width: 100%; padding: 0.75rem; border: 1px solid #d1d5db; border-radius: 0.375rem; font-size: 1rem; resize: vertical;" %>
+      </div>
+
+      <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+        <%= link_to "Cancel", category_path(@category), style: "padding: 0.75rem 1.5rem; border: 1px solid #d1d5db; border-radius: 0.375rem; text-decoration: none; color: #374151; background-color: white;" %>
+        <%= form.submit "Update Category", style: "background-color: #059669; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 0.375rem; font-weight: 500; cursor: pointer;" %>
+      </div>
+    <% end %>
+  </div>
+</div>
